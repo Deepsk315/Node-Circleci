@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: circleci/node:14 # or another Node.js version
+      - image: circleci/node:14
     steps:
       - checkout
       - run:
@@ -12,6 +12,14 @@ jobs:
       - run:
           name: Run tests
           command: npm test -- --detectOpenHandles
+
+  trigger_master:
+    docker:
+      - image: circleci/node:14
+    steps:
+      - run:
+          name: Notify master build trigger
+          command: echo "Triggered a build on master due to a successful staging build."
 
 workflows:
   version: 2
@@ -26,12 +34,4 @@ workflows:
             - test
           filters:
             branches:
-              only: staging
-          
-  trigger_master:
-    docker:
-      - image: circleci/node:14 # or another Node.js version
-    steps:
-      - run:
-          name: Notify master build trigger
-          command: echo "Triggered a build on master due to a successful staging build."
+              only: staging # This job will run only for the staging branch
