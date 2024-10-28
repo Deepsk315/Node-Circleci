@@ -15,6 +15,23 @@ jobs:
 
 workflows:
   version: 2
-  test:
+  build:
     jobs:
-      - test
+      - test:
+          filters:
+            branches:
+              ignore: master # Ignore builds on the master branch
+      - trigger_master:
+          requires:
+            - test
+          filters:
+            branches:
+              only: staging
+          
+  trigger_master:
+    docker:
+      - image: circleci/node:14 # or another Node.js version
+    steps:
+      - run:
+          name: Notify master build trigger
+          command: echo "Triggered a build on master due to a successful staging build."
