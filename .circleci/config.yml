@@ -13,6 +13,18 @@ jobs:
           name: Run tests
           command: npm test -- --detectOpenHandles
 
+  staging-build:
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Run tests
+          command: npm test -- --detectOpenHandles
+
   trigger_master:
     docker:
       - image: circleci/node:14
@@ -29,7 +41,7 @@ workflows:
           filters:
             branches:
               ignore: master 
-      - trigger_master_build:
+      - trigger_master:
           requires:
             - staging-build
           filters:
