@@ -11,7 +11,7 @@ jobs:
           command: npm install
       - run:
           name: Run tests
-          command: npm test
+          command: npm test -- --detectOpenHandles
 
 workflows:
   version: 2

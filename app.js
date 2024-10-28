@@ -1,16 +1,14 @@
-const express = require('express')
-const app = express()
-
+// app.js
+const express = require('express');
+const app = express();
 const PORT = 3001
 
-app.use(express.json())
+app.get('/hello', (req, res) => {
+    res.send('Hello, World!');
+});
 
-app.get("/hello",(req,res) => {
-    return res.status(200).send("Hello, World!")
-})
+const server = app.listen(PORT, () => {
+    console.log('Server is running on port 3000');
+});
 
-app.listen(PORT,()=>{
-    console.log(`server started on port : ${PORT}`)
-})
-
-module.exports = app
+module.exports = { app, server };
