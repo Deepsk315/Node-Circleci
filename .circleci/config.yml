@@ -25,13 +25,13 @@ workflows:
   version: 2
   build:
     jobs:
-      - test:
+      - staging-build:
           filters:
             branches:
-              ignore: master # Ignore builds on the master branch
-      - trigger_master:
+              ignore: master 
+      - trigger_master_build:
           requires:
-            - test
+            - staging-build
           filters:
             branches:
               only: staging # This job will run only for the staging branch
